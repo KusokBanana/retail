@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+    database:
+        image: postgres:12.4
+        container_name: retail_db
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_DB: ${DB_NAME}
+        networks:
+            - symfony
+        volumes:
+            - ./dbdata:/var/lib/postgresql/data
+            - ./docker/database/run.sh:/run.sh
+    php-fpm:
+        container_name: retail_php
+        build:
+            context: .
+            dockerfile: docker/php-fpm/Dockerfile
+        volumes:
+            - ./api/:/var/www/
+            - ./.env:/var/www/.env.local
+            - ./raw-data:/var/www/data
+        networks:
+            - symfony
+    nginx:
+        container_name: retail_nginx
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+        restart: always
+        volumes:
+            - ./api/:/var/www/
+        ports:
+            - 668:80
+        networks:
+            - symfony
+networks:
+    symfony:
