@@ -6,7 +6,7 @@ services:
         container_name: retail_db
         restart: always
         ports:
-            - 5432:5432
+            - ${DB_PORT}:5432
         environment:
             POSTGRES_PASSWORD: ${DB_PASSWORD}
             POSTGRES_USER: ${DB_USER}
@@ -23,7 +23,6 @@ services:
             dockerfile: docker/php-fpm/Dockerfile
         volumes:
             - ./api/:/var/www/
-            - ./.env:/var/www/.env.local
             - ./raw-data:/var/www/data
         networks:
             - symfony
@@ -36,7 +35,7 @@ services:
         volumes:
             - ./api/:/var/www/
         ports:
-            - 668:80
+            - 669:80
         networks:
             - symfony
 networks:

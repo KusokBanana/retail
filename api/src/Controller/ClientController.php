@@ -36,8 +36,10 @@ class ClientController extends AbstractController
     {
         $limit = $request->query->get('limit', 50);
         $offset = $request->query->get('offset', 0);
+        $name = $request->query->get('name');
+        $orderBy = $request->query->get('order', []);
 
-        $clients = $this->clientRepository->findBy([], ['id' => 'DESC'], $limit, $offset);
+        $clients = $this->clientRepository->findManyBy($name, $orderBy, $limit, $offset);
         $clientsIds = array_map(fn(Client $client) => $client->getId(), $clients);
 
         $recommendations = $this->recommendationRepository->findBy(['client' => $clientsIds], ['id' => 'DESC']);
