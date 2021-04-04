@@ -53,6 +53,12 @@ class Recommendation
         $this->client  = $client;
     }
 
+    public function update(string $status): void
+    {
+        RecommendationStatuses::validate($status);
+
+        $this->status = $status;
+    }
 
     public function __toString(): string
     {

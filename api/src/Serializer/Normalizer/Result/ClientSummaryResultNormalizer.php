@@ -16,7 +16,7 @@ class ClientSummaryResultNormalizer implements NormalizerInterface, CacheableSup
     {
         /* @var $object ClientSummaryResult */
         return [
-            'client' => $this->normalizer->normalize($object, $format, $context),
+            'client' => $this->normalizer->normalize($object->getClient(), $format, $context),
             'summary' => $object->getSummary(),
         ];
     }
