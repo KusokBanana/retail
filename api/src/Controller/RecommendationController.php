@@ -26,7 +26,7 @@ class RecommendationController extends AbstractController
     }
 
     /**
-     * @Route("/recommendations/{id}", name="update_recommendations", methods={"PATCH"})
+     * @Route("/recommendations/{id}", name="update_recommendations", methods={"POST"})
      */
     public function index(Request $request, int $id): Response
     {
